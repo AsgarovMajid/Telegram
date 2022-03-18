@@ -1,0 +1,198 @@
+﻿<Window x:Class="Telegram.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:Telegram"
+        mc:Ignorable="d"
+   
+
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="MainWindow" Height="800" Width="1000" Loaded="Window_Loaded"    >
+    
+    <Window.Resources>
+        <Style  x:Key="MyLabelStyle" TargetType="Label">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Label}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+            BorderThickness="{TemplateBinding BorderThickness}" 
+            Background="{TemplateBinding Background}" 
+            Padding="{TemplateBinding Padding}" 
+            SnapsToDevicePixels="true" 
+            CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"  ></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <ListBox Grid.Column="0"  HorizontalAlignment="Stretch" Name="humans" Background="#FF1A2A38" ItemsSource="{Binding contact}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Background="Transparent">
+                        <Button Background="Transparent" BorderThickness="50" Tag="{Binding name}" Height="100" Click="Button_Click" >
+                            <StackPanel Background="Transparent" Orientation="Horizontal">
+                                <Label Background="Transparent" HorizontalAlignment="Left" Width="100" Height="100">
+                                <Image Source="{Binding imageurl}"  />
+
+                                </Label>
+                                <Label Background="Transparent" Foreground="White" FontWeight="Heavy" Content="{Binding name}">
+                                </Label>
+
+                                <Label Background="Transparent" Foreground="White" Content="{Binding time}">
+                                </Label>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Background="Transparent" IsItemsHost="True" Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+
+
+        </ListBox>
+
+
+
+        <Grid Name="ikincihisse" Grid.Column="1" >
+            <Grid.RowDefinitions >
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="10*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="27*"/>
+                    <RowDefinition Height="5*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="#FF1A2A38">
+                    <Label BorderThickness="5">
+                        <Image Width="50"  Height="50" Name="copyimage"></Image>
+                    </Label>
+                    <Label  Name="basliq"  FontSize="25" Foreground="White" FontWeight="Heavy" Margin="0,0,0,28"></Label>
+                </StackPanel>
+
+            </Grid>
+
+
+
+            <ScrollViewer Grid.Row="1" >
+                <Grid >
+
+                    <Image Source="IMAGE/TELEGRAM.jpg" VerticalAlignment="Top"  Stretch="Fill" Height="706" >
+                    </Image>
+
+                    <ListBox Foreground="White"   Name="Chat" Background="Transparent"  VerticalAlignment="Top"  HorizontalAlignment="Stretch" Height="790" Margin="0,10,0,-50" >
+
+                        <ItemsControl Foreground="White" >
+
+                            <ItemsControl.ItemTemplate >
+                                <DataTemplate >
+
+                                    <Label Style="{StaticResource MyLabelStyle}"></Label>
+
+
+
+
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+
+                        </ItemsControl>
+                        <Label Foreground="White" ></Label>
+                    </ListBox>
+
+
+                    <WrapPanel Orientation="Horizontal" Name="emojis" Background="#FF251F61" Visibility="Hidden" Margin="0,0,0,0"  Height="300" Width="670" >
+                        <Button Background="#FF251F61" Name="exitemoji" Click="exitemoji_Click" Content="X" FontSize="16" Width="50" Height="50"></Button>
+                        <ItemsControl  Name="baza" ItemsSource="{Binding emojiss}">
+
+                            <ItemsControl.ItemTemplate >
+                                <DataTemplate >
+                                    <Button  Click="Button_Click_2" FontSize="20" Content="{Binding}"  >
+
+
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                        </ItemsControl>
+
+                    </WrapPanel>
+
+
+
+
+                </Grid>
+            </ScrollViewer>
+
+            <Grid Background="#FF1A2A38" Grid.Row="2" Name="send">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="8*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button
+                Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                materialDesign:ButtonAssist.CornerRadius="25"
+                ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Background="#FF284F70" Grid.Column="0" Height="Auto" Click="Button_Click_1" Width="Auto">
+                    <emoji:TextBlock FontSize="24" Text="😁"/>
+                </Button>
+
+                <Button
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                materialDesign:ButtonProgressAssist.Value="-1"
+                materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                Margin="2,0"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Background="#FF284F70" Grid.Column="2" Height="70" Click="Button_Click_3">
+                    <materialDesign:PackIcon Kind="Send"/>
+                </Button>
+                <TextBox FontWeight="Heavy" FontFamily="Comic Sans Ms" Foreground="White" Background="#FF1A2A38" Name="mesaj" Grid.Column="1"  FontSize="20"/>
+
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>
